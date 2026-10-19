@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f1f5ff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Lukz Game">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>Lukz Game</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 20px; padding-bottom: max(20px, env(safe-area-inset-bottom)); background: #f1f5ff; color: #172554; font-family: system-ui, sans-serif; }
+    main { width: min(100%, 420px); text-align: center; }
+    h1 { margin: 0; font-size: clamp(2rem, 8vw, 3rem); }
+    .subtitle { color: #64748b; margin: 8px 0 22px; }
+    #status { min-height: 1.6em; font-size: 1.2rem; font-weight: 700; color: #334155; }
+    .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px; background: #cbd5e1; border-radius: 18px; }
+    .cell { aspect-ratio: 1; border: 0; border-radius: 12px; background: white; color: #2563eb; font: 800 clamp(2.8rem, 15vw, 5rem)/1 system-ui, sans-serif; cursor: pointer; box-shadow: 0 3px 0 #94a3b8; touch-action: manipulation; }
+    .cell:hover:empty { background: #eff6ff; }
+    .cell.circle { color: #f97316; }
+    .cell:disabled { cursor: default; }
+    .cell:focus-visible, #reset:focus-visible { outline: 3px solid #0f172a; outline-offset: 3px; }
+    #reset { margin-top: 22px; padding: 12px 20px; border: 0; border-radius: 12px; background: #2563eb; color: white; font: inherit; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+    #reset:hover { background: #1d4ed8; }
+    .legend { color: #64748b; font-size: .95rem; }
+    #install { display: none; margin: 0 0 16px; padding: 10px 16px; border: 1px solid #cbd5e1; border-radius: 12px; color: #172554; background: white; font: inherit; font-weight: 650; cursor: pointer; }
+    .install-tip { color: #64748b; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Lukz Game</h1>
+    <p class="subtitle">Crosses &amp; Circles · Take turns and get three in a row!</p>
+    <button id="install" type="button">Install Lukz Game</button>
+    <p id="status" aria-live="polite">Crosses go first.</p>
+    <div class="board" id="board" role="group" aria-label="Tic-tac-toe board">
+      <button class="cell" aria-label="Top left, empty"></button>
+      <button class="cell" aria-label="Top middle, empty"></button>
+      <button class="cell" aria-label="Top right, empty"></button>
+      <button class="cell" aria-label="Middle left, empty"></button>
+      <button class="cell" aria-label="Center, empty"></button>
+      <button class="cell" aria-label="Middle right, empty"></button>
+      <button class="cell" aria-label="Bottom left, empty"></button>
+      <button class="cell" aria-label="Bottom middle, empty"></button>
+      <button class="cell" aria-label="Bottom right, empty"></button>
+    </div>
+    <button id="reset" type="button">New game</button>
+    <p class="legend"><strong style="color:#2563eb">X</strong> Crosses &nbsp;·&nbsp; <strong style="color:#f97316">O</strong> Circles</p>
+    <p class="install-tip" id="installTip">Play in your browser, or add Lukz Game to your home screen.</p>
+  </main>
+  <script>
+    const cells = Array.from(document.querySelectorAll('.cell'));
+    const status = document.querySelector('#status');
+    const resetButton = document.querySelector('#reset');
+    let currentPlayer = 'X';
+    let gameOver = false;
+    const winningLines = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+    ];
+    function checkWinner() {
+      return winningLines.some(function (line) {
+        const [a, b, c] = line;
+        return cells[a].textContent !== '' && cells[a].textContent === cells[b].textContent && cells[b].textContent === cells[c].textContent;
+      });
+    }
+    function playTurn(event) {
+      const cell = event.currentTarget;
+      if (gameOver || cell.textContent !== '') return;
+      cell.textContent = currentPlayer;
+      cell.classList.toggle('circle', currentPlayer === 'O');
+      cell.setAttribute('aria-label', cell.getAttribute('aria-label').replace('empty', currentPlayer === 'X' ? 'Cross' : 'Circle'));
+      cell.disabled = true;
+      if (checkWinner()) {
+        status.textContent = `${currentPlayer === 'X' ? 'Crosses' : 'Circles'} win! 🎉`;
+        gameOver = true;
+        return;
+      }
+      if (cells.every(function (square) { return square.textContent !== ''; })) {
+        status.textContent = "It's a draw! Good game.";
+        gameOver = true;
+        return;
+      }
+      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+      status.textContent = `${currentPlayer === 'X' ? 'Crosses' : 'Circles'}' turn.`;
+    }
+    function newGame() {
+      currentPlayer = 'X';
+      gameOver = false;
+      status.textContent = 'Crosses go first.';
+      cells.forEach(function (cell) {
+        cell.textContent = '';
+        cell.classList.remove('circle');
+        cell.disabled = false;
+        cell.setAttribute('aria-label', cell.getAttribute('aria-label').replace('Cross', 'empty').replace('Circle', 'empty'));
+      });
+    }
+    cells.forEach(function (cell) { cell.addEventListener('click', playTurn); });
+    resetButton.addEventListener('click', newGame);
+
+    // Save the game files on the phone so it can open when offline.
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () { navigator.serviceWorker.register('./sw.js'); });
+    }
+
+    // Android and some desktop browsers provide a direct install button.
+    let installPrompt;
+    const installButton = document.querySelector('#install');
+    window.addEventListener('beforeinstallprompt', function (event) {
+      event.preventDefault();
+      installPrompt = event;
+      installButton.style.display = 'inline-block';
+    });
+    installButton.addEventListener('click', async function () {
+      if (!installPrompt) return;
+      installPrompt.prompt();
+      await installPrompt.userChoice;
+      installPrompt = null;
+      installButton.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
+
