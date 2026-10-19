@@ -1,141 +1,22 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f1f5ff">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Lukz Game">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-  <title>Lukz Game</title>
-  <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 20px; padding-bottom: max(20px, env(safe-area-inset-bottom)); background: radial-gradient(ellipse at 50% 0%, #dce8ff 0%, #f1f5ff 58%); color: #172554; font-family: 'Nunito', 'Trebuchet MS', system-ui, sans-serif; }
-    main { width: min(100%, 420px); text-align: center; }
-    .welcome-screen { position: relative; overflow: hidden; padding: 38px 26px 30px; border: 1px solid #fff; border-radius: 30px; background: #ffffffed; box-shadow: 0 22px 65px #233b7821; }
-    .welcome-screen::before { content: ''; position: absolute; width: 220px; height: 220px; border-radius: 50%; top: -145px; right: -55px; background: #dbeafe; }
-    .welcome-screen::after { content: ''; position: absolute; width: 120px; height: 120px; border-radius: 50%; bottom: -82px; left: -54px; background: #ffedd5; }
-    .welcome-art { position: relative; z-index: 1; display: flex; justify-content: center; align-items: center; gap: 12px; margin: 0 auto 25px; }
-    .game-mark { width: 68px; height: 68px; display: grid; place-items: center; border-radius: 22px; background: #eff6ff; color: #2563eb; font-size: 2.35rem; font-weight: 900; transform: rotate(-7deg); }
-    .circle-mark { background: #fff7ed; color: #f97316; transform: rotate(7deg); }
-    .sparkle { color: #f5b800; font-size: 1.8rem; }
-    .eyebrow { margin: 0 0 10px; color: #5572ad; font-size: .78rem; font-weight: 900; letter-spacing: .18em; }
-    .welcome-title { position: relative; z-index: 1; margin: 0; font-size: clamp(2.25rem, 10vw, 3.2rem); line-height: 1.08; font-weight: 900; letter-spacing: -.04em; }
-    .welcome-title span { display: block; color: #2563eb; }
-    .welcome-message { margin: 15px 0 25px; color: #64748b; font-size: 1.15rem; font-weight: 700; }
-    #continue { position: relative; z-index: 1; width: 100%; padding: 15px 22px; border: 0; border-radius: 15px; background: linear-gradient(100deg, #2563eb, #5746dc); color: white; font: inherit; font-size: 1.1rem; font-weight: 900; cursor: pointer; box-shadow: 0 8px 18px #3655d533; transition: transform .15s ease, box-shadow .15s ease; touch-action: manipulation; }
-    #continue:hover { transform: translateY(-2px); box-shadow: 0 11px 22px #3655d544; }
-    #continue:active { transform: translateY(1px); }
-    #continue:focus-visible, .cell:focus-visible, #reset:focus-visible { outline: 3px solid #0f172a; outline-offset: 3px; }
-    .welcome-hint { position: relative; z-index: 1; margin: 17px 0 0; color: #94a3b8; font-size: .85rem; font-weight: 700; }
-    .game-screen h1 { margin: 0; font-size: clamp(2rem, 8vw, 3rem); }
-    .subtitle { color: #64748b; margin: 8px 0 22px; }
-    #status { min-height: 1.6em; font-size: 1.2rem; font-weight: 800; color: #334155; }
-    .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px; background: #cbd5e1; border-radius: 18px; }
-    .cell { aspect-ratio: 1; border: 0; border-radius: 12px; background: white; color: #2563eb; font: 900 clamp(2.8rem, 15vw, 5rem)/1 'Nunito', 'Trebuchet MS', system-ui, sans-serif; cursor: pointer; box-shadow: 0 3px 0 #94a3b8; touch-action: manipulation; }
-    .cell:hover:empty { background: #eff6ff; }
-    .cell.circle { color: #f97316; }
-    .cell:disabled { cursor: default; }
-    #reset { margin-top: 22px; padding: 12px 20px; border: 0; border-radius: 12px; background: #2563eb; color: white; font: inherit; font-weight: 900; cursor: pointer; touch-action: manipulation; }
-    #reset:hover { background: #1d4ed8; }
-    .legend { color: #64748b; font-size: .95rem; }
-    #install { display: none; margin: 0 0 16px; padding: 10px 16px; border: 1px solid #cbd5e1; border-radius: 12px; color: #172554; background: white; font: inherit; font-weight: 800; cursor: pointer; }
-    .install-tip { color: #64748b; font-size: .9rem; }
-    [hidden] { display: none !important; }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#f1f5ff"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Lukz Game">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet"><title>Lukz Game</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:20px;padding-bottom:max(20px,env(safe-area-inset-bottom));background:radial-gradient(ellipse at 50% 0%,#dce8ff 0%,#f1f5ff 58%);color:#172554;font-family:'Nunito','Trebuchet MS',system-ui,sans-serif}main{width:min(100%,440px);text-align:center}h1{margin:0;font-size:clamp(2rem,8vw,3rem)}.welcome-screen,.menu-screen{position:relative;overflow:hidden;padding:34px 24px 28px;border:1px solid #fff;border-radius:30px;background:#ffffffed;box-shadow:0 22px 65px #233b7821}.welcome-screen:before,.menu-screen:before{content:'';position:absolute;width:220px;height:220px;border-radius:50%;top:-145px;right:-55px;background:#dbeafe}.welcome-screen:after,.menu-screen:after{content:'';position:absolute;width:120px;height:120px;border-radius:50%;bottom:-82px;left:-54px;background:#ffedd5}.welcome-art{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;gap:12px;margin:0 auto 22px}.game-mark{width:68px;height:68px;display:grid;place-items:center;border-radius:22px;background:#eff6ff;color:#2563eb;font-size:2.35rem;font-weight:900;transform:rotate(-7deg)}.circle-mark{background:#fff7ed;color:#f97316;transform:rotate(7deg)}.sparkle{color:#f5b800;font-size:1.8rem}.eyebrow{position:relative;z-index:1;margin:0 0 10px;color:#5572ad;font-size:.78rem;font-weight:900;letter-spacing:.18em}.welcome-title{position:relative;z-index:1;margin:0;font-size:clamp(2.25rem,10vw,3.2rem);line-height:1.08;font-weight:900;letter-spacing:-.04em}.welcome-title span{display:block;color:#2563eb}.welcome-message{position:relative;z-index:1;margin:15px 0 25px;color:#64748b;font-size:1.15rem;font-weight:700}.primary-button,.game-choice,#reset,.back-button{border:0;cursor:pointer;font:inherit;font-weight:900;touch-action:manipulation}.primary-button{position:relative;z-index:1;width:100%;padding:15px 22px;border-radius:15px;background:linear-gradient(100deg,#2563eb,#5746dc);color:white;font-size:1.1rem;box-shadow:0 8px 18px #3655d533;transition:transform .15s ease}.primary-button:hover{transform:translateY(-2px)}.welcome-hint{position:relative;z-index:1;margin:17px 0 0;color:#94a3b8;font-size:.85rem;font-weight:700}.menu-title{position:relative;z-index:1}.menu-hint,.subtitle{color:#64748b;margin:8px 0 22px}.game-choice{position:relative;z-index:1;display:flex;align-items:center;gap:14px;width:100%;margin-top:12px;padding:16px;border:2px solid #e2e8f0;border-radius:18px;background:#fff;color:#172554;text-align:left;transition:transform .15s ease,border-color .15s ease}.game-choice:hover{transform:translateY(-2px);border-color:#93c5fd}.choice-icon{width:52px;height:52px;display:grid;place-items:center;flex:0 0 auto;border-radius:15px;background:#eff6ff;font-size:1.8rem}.game-choice.fruit .choice-icon{background:#f0fdf4}.choice-copy{display:grid;gap:2px}.choice-copy strong{font-size:1.08rem}.choice-copy small{color:#64748b;font-size:.88rem;font-weight:700}#status{min-height:1.6em;font-size:1.2rem;font-weight:800;color:#334155}.board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px;background:#cbd5e1;border-radius:18px}.cell{aspect-ratio:1;border:0;border-radius:12px;background:white;color:#2563eb;font:900 clamp(2.8rem,15vw,5rem)/1 'Nunito','Trebuchet MS',system-ui,sans-serif;cursor:pointer;box-shadow:0 3px 0 #94a3b8;touch-action:manipulation}.cell:hover:empty{background:#eff6ff}.cell.circle{color:#f97316}.cell:disabled{cursor:default}#reset{margin-top:20px;padding:12px 20px;border-radius:12px;background:#2563eb;color:white}.legend{color:#64748b;font-size:.95rem}#install{display:none;margin:0 0 16px;padding:10px 16px;border:1px solid #cbd5e1;border-radius:12px;color:#172554;background:white;font:inherit;font-weight:800;cursor:pointer}.install-tip{color:#64748b;font-size:.9rem}.back-button{display:inline-block;margin-bottom:10px;padding:8px 12px;border-radius:10px;background:#e2e8f0;color:#334155}.memory-stats{display:flex;justify-content:center;gap:10px;margin:18px 0 14px}.stat{min-width:110px;padding:9px 14px;border:1px solid #dbeafe;border-radius:14px;background:#fff;color:#64748b;font-weight:800}.stat strong{display:block;color:#1e3a8a;font-size:1.2rem}.fruit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.fruit-card{aspect-ratio:1;display:grid;place-items:center;border:0;border-radius:15px;background:linear-gradient(145deg,#60a5fa,#4f46e5);color:white;font:900 clamp(1.3rem,7vw,2.1rem) 'Nunito',system-ui,sans-serif;cursor:pointer;box-shadow:0 4px 0 #3730a3;touch-action:manipulation}.fruit-card:not(.flipped):not(.matched):after{content:'?'}.fruit-card.flipped,.fruit-card.matched{background:#fff;color:#172554;box-shadow:0 3px 0 #cbd5e1}.fruit-card.matched{background:#dcfce7;box-shadow:0 3px 0 #86efac}.fruit-card:disabled{cursor:default}button:focus-visible{outline:3px solid #0f172a;outline-offset:3px}[hidden]{display:none!important}
+</style>
 </head>
 <body>
-  <main id="welcome-screen" class="welcome-screen">
-    <div class="welcome-art" aria-hidden="true"><span class="game-mark">X</span><span class="sparkle">✦</span><span class="game-mark circle-mark">O</span></div>
-    <p class="eyebrow">LET'S PLAY</p>
-    <h1 class="welcome-title">Welcome to Lukie's <span>first game</span></h1>
-    <p class="welcome-message">Enjoy NDAA!</p>
-    <button id="continue" type="button">Continue <span aria-hidden="true">→</span></button>
-    <p class="welcome-hint">Crosses &amp; Circles is waiting for you</p>
-  </main>
-  <main id="game-screen" class="game-screen" hidden>
-    <h1 tabindex="-1">Lukz Game</h1>
-    <p class="subtitle">Crosses &amp; Circles · Take turns and get three in a row!</p>
-    <button id="install" type="button">Install Lukz Game</button>
-    <p id="status" aria-live="polite">Crosses go first.</p>
-    <div class="board" id="board" role="group" aria-label="Tic-tac-toe board">
-      <button class="cell" aria-label="Top left, empty"></button><button class="cell" aria-label="Top middle, empty"></button><button class="cell" aria-label="Top right, empty"></button>
-      <button class="cell" aria-label="Middle left, empty"></button><button class="cell" aria-label="Center, empty"></button><button class="cell" aria-label="Middle right, empty"></button>
-      <button class="cell" aria-label="Bottom left, empty"></button><button class="cell" aria-label="Bottom middle, empty"></button><button class="cell" aria-label="Bottom right, empty"></button>
-    </div>
-    <button id="reset" type="button">New game</button>
-    <p class="legend"><strong style="color:#2563eb">X</strong> Crosses &nbsp;·&nbsp; <strong style="color:#f97316">O</strong> Circles</p>
-    <p class="install-tip">Play in your browser, or add Lukz Game to your home screen.</p>
-  </main>
-  <script>
-    const welcomeScreen = document.querySelector('#welcome-screen');
-    const gameScreen = document.querySelector('#game-screen');
-    document.querySelector('#continue').addEventListener('click', function () {
-      welcomeScreen.hidden = true;
-      gameScreen.hidden = false;
-      gameScreen.querySelector('h1').focus();
-    });
-    const cells = Array.from(document.querySelectorAll('.cell'));
-    const status = document.querySelector('#status');
-    const resetButton = document.querySelector('#reset');
-    let currentPlayer = 'X';
-    let gameOver = false;
-    const winningLines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-    function checkWinner() {
-      return winningLines.some(function (line) {
-        const a = line[0], b = line[1], c = line[2];
-        return cells[a].textContent !== '' && cells[a].textContent === cells[b].textContent && cells[b].textContent === cells[c].textContent;
-      });
-    }
-    function playTurn(event) {
-      const cell = event.currentTarget;
-      if (gameOver || cell.textContent !== '') return;
-      cell.textContent = currentPlayer;
-      cell.classList.toggle('circle', currentPlayer === 'O');
-      cell.setAttribute('aria-label', cell.getAttribute('aria-label').replace('empty', currentPlayer === 'X' ? 'Cross' : 'Circle'));
-      cell.disabled = true;
-      if (checkWinner()) {
-        status.textContent = (currentPlayer === 'X' ? 'Crosses' : 'Circles') + ' win! 🎉';
-        gameOver = true;
-        return;
-      }
-      if (cells.every(function (square) { return square.textContent !== ''; })) {
-        status.textContent = "It's a draw! Good game.";
-        gameOver = true;
-        return;
-      }
-      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-      status.textContent = (currentPlayer === 'X' ? 'Crosses' : 'Circles') + "' turn.";
-    }
-    function newGame() {
-      currentPlayer = 'X';
-      gameOver = false;
-      status.textContent = 'Crosses go first.';
-      cells.forEach(function (cell) {
-        cell.textContent = '';
-        cell.classList.remove('circle');
-        cell.disabled = false;
-        cell.setAttribute('aria-label', cell.getAttribute('aria-label').replace('Cross', 'empty').replace('Circle', 'empty'));
-      });
-    }
-    cells.forEach(function (cell) { cell.addEventListener('click', playTurn); });
-    resetButton.addEventListener('click', newGame);
-    if ('serviceWorker' in navigator) window.addEventListener('load', function () { navigator.serviceWorker.register('./sw.js'); });
-    let installPrompt;
-    const installButton = document.querySelector('#install');
-    window.addEventListener('beforeinstallprompt', function (event) {
-      event.preventDefault(); installPrompt = event; installButton.style.display = 'inline-block';
-    });
-    installButton.addEventListener('click', async function () {
-      if (!installPrompt) return;
-      installPrompt.prompt(); await installPrompt.userChoice; installPrompt = null; installButton.style.display = 'none';
-    });
-  </script>
+<main id="welcome-screen" class="welcome-screen"><div class="welcome-art" aria-hidden="true"><span class="game-mark">X</span><span class="sparkle">✦</span><span class="game-mark circle-mark">O</span></div><p class="eyebrow">LET'S PLAY</p><h1 class="welcome-title">Welcome to Lukie's <span>first game</span></h1><p class="welcome-message">Enjoy NDAA!</p><button id="continue" class="primary-button" type="button">Continue <span aria-hidden="true">→</span></button><p class="welcome-hint">A little fun is just one tap away</p></main>
+<main id="menu-screen" class="menu-screen" hidden><p class="eyebrow">LUKZ GAME</p><h1 class="menu-title">Choose a game</h1><p class="menu-hint">What would you like to play?</p><button class="game-choice" id="choose-crosses" type="button"><span class="choice-icon" aria-hidden="true">❌⭕</span><span class="choice-copy"><strong>Crosses &amp; Circles</strong><small>Get three in a row</small></span></button><button class="game-choice fruit" id="choose-fruit" type="button"><span class="choice-icon" aria-hidden="true">🍓🍊</span><span class="choice-copy"><strong>Fruit Match</strong><small>Find all the matching pairs</small></span></button></main>
+<main id="crosses-screen" class="game-screen" hidden><button class="back-button" data-back type="button">← Games</button><h1>Lukz Game</h1><p class="subtitle">Crosses &amp; Circles · Take turns and get three in a row!</p><button id="install" type="button">Install Lukz Game</button><p id="status" aria-live="polite">Crosses go first.</p><div class="board" id="board" role="group" aria-label="Tic-tac-toe board"><button class="cell" aria-label="Top left, empty"></button><button class="cell" aria-label="Top middle, empty"></button><button class="cell" aria-label="Top right, empty"></button><button class="cell" aria-label="Middle left, empty"></button><button class="cell" aria-label="Center, empty"></button><button class="cell" aria-label="Middle right, empty"></button><button class="cell" aria-label="Bottom left, empty"></button><button class="cell" aria-label="Bottom middle, empty"></button><button class="cell" aria-label="Bottom right, empty"></button></div><button id="reset" type="button">New game</button><p class="legend"><strong style="color:#2563eb">X</strong> Crosses &nbsp;·&nbsp; <strong style="color:#f97316">O</strong> Circles</p><p class="install-tip">Play in your browser, or add Lukz Game to your home screen.</p></main>
+<main id="fruit-screen" class="game-screen" hidden><button class="back-button" data-back type="button">← Games</button><h1>Fruit Match 🍓</h1><p class="subtitle">Flip the cards and find all 8 matching fruit pairs!</p><div class="memory-stats"><div class="stat">Moves<strong id="moves">0</strong></div><div class="stat">Time<strong><span id="seconds">0</span>s</strong></div></div><div id="fruit-grid" class="fruit-grid" role="group" aria-label="Fruit matching cards"></div><p id="fruit-message" aria-live="polite" class="subtitle">Tap any card to start.</p><button id="fruit-reset" type="button">Shuffle &amp; restart</button></main>
+<script>
+const screens=['welcome-screen','menu-screen','crosses-screen','fruit-screen'].map(function(id){return document.getElementById(id)});function showScreen(screen){screens.forEach(function(item){item.hidden=item!==screen})}document.querySelector('#continue').addEventListener('click',function(){showScreen(document.querySelector('#menu-screen'))});document.querySelector('#choose-crosses').addEventListener('click',function(){showScreen(document.querySelector('#crosses-screen'))});document.querySelector('#choose-fruit').addEventListener('click',function(){showScreen(document.querySelector('#fruit-screen'));startFruitGame()});document.querySelectorAll('[data-back]').forEach(function(button){button.addEventListener('click',function(){clearInterval(fruitTimer);fruitTimer=null;showScreen(document.querySelector('#menu-screen'))})});
+const cells=Array.from(document.querySelectorAll('.cell')),status=document.querySelector('#status');let currentPlayer='X',gameOver=false;const winningLines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];function checkWinner(){return winningLines.some(function(line){const a=line[0],b=line[1],c=line[2];return cells[a].textContent!==''&&cells[a].textContent===cells[b].textContent&&cells[b].textContent===cells[c].textContent})}function playTurn(event){const cell=event.currentTarget;if(gameOver||cell.textContent!=='')return;cell.textContent=currentPlayer;cell.classList.toggle('circle',currentPlayer==='O');cell.setAttribute('aria-label',cell.getAttribute('aria-label').replace('empty',currentPlayer==='X'?'Cross':'Circle'));cell.disabled=true;if(checkWinner()){status.textContent=(currentPlayer==='X'?'Crosses':'Circles')+' win! 🎉';gameOver=true;return}if(cells.every(function(square){return square.textContent!==''})){status.textContent="It's a draw! Good game.";gameOver=true;return}currentPlayer=currentPlayer==='X'?'O':'X';status.textContent=(currentPlayer==='X'?'Crosses':'Circles')+"' turn."}function resetCrosses(){currentPlayer='X';gameOver=false;status.textContent='Crosses go first.';cells.forEach(function(cell){cell.textContent='';cell.classList.remove('circle');cell.disabled=false;cell.setAttribute('aria-label',cell.getAttribute('aria-label').replace('Cross','empty').replace('Circle','empty'))})}cells.forEach(function(cell){cell.addEventListener('click',playTurn)});document.querySelector('#reset').addEventListener('click',resetCrosses);
+const fruits=['🍎','🍌','🍇','🍊','🍓','🍉','🍍','🥝'],fruitGrid=document.querySelector('#fruit-grid'),movesLabel=document.querySelector('#moves'),secondsLabel=document.querySelector('#seconds'),fruitMessage=document.querySelector('#fruit-message');let firstCard=null,lockCards=false,moves=0,matchedPairs=0,seconds=0,fruitTimer=null;function startFruitGame(){clearInterval(fruitTimer);fruitTimer=null;firstCard=null;lockCards=false;moves=0;matchedPairs=0;seconds=0;movesLabel.textContent='0';secondsLabel.textContent='0';fruitMessage.textContent='Tap any card to start.';const cards=fruits.concat(fruits).sort(function(){return Math.random()-.5});fruitGrid.textContent='';cards.forEach(function(fruit,index){const card=document.createElement('button');card.type='button';card.className='fruit-card';card.dataset.fruit=fruit;card.setAttribute('aria-label','Hidden fruit card '+(index+1));card.addEventListener('click',flipCard);fruitGrid.appendChild(card)})}function flipCard(event){const card=event.currentTarget;if(lockCards||card.classList.contains('flipped')||card.classList.contains('matched'))return;if(fruitTimer===null)fruitTimer=setInterval(function(){seconds++;secondsLabel.textContent=seconds},1000);card.classList.add('flipped');card.textContent=card.dataset.fruit;card.setAttribute('aria-label',card.dataset.fruit+', revealed');if(firstCard===null){firstCard=card;return}moves++;movesLabel.textContent=moves;if(firstCard.dataset.fruit===card.dataset.fruit){firstCard.classList.add('matched');card.classList.add('matched');firstCard.disabled=true;card.disabled=true;matchedPairs++;firstCard=null;if(matchedPairs===fruits.length){clearInterval(fruitTimer);fruitTimer=null;fruitMessage.textContent='You matched every fruit in '+moves+' moves! 🎉'}else fruitMessage.textContent='Match! Keep going!'}else{lockCards=true;fruitMessage.textContent='Not a match — try again!';const oldCard=firstCard;firstCard=null;setTimeout(function(){oldCard.classList.remove('flipped');card.classList.remove('flipped');oldCard.textContent='';card.textContent='';oldCard.setAttribute('aria-label','Hidden fruit card');card.setAttribute('aria-label','Hidden fruit card');lockCards=false},750)}}document.querySelector('#fruit-reset').addEventListener('click',startFruitGame);startFruitGame();
+if('serviceWorker'in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js')});let installPrompt;const installButton=document.querySelector('#install');window.addEventListener('beforeinstallprompt',function(event){event.preventDefault();installPrompt=event;installButton.style.display='inline-block'});installButton.addEventListener('click',async function(){if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;installButton.style.display='none'});
+</script>
 </body>
 </html>
