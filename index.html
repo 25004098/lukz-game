@@ -10,62 +10,86 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <title>Lukz Game</title>
   <style>
     * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 20px; padding-bottom: max(20px, env(safe-area-inset-bottom)); background: #f1f5ff; color: #172554; font-family: system-ui, sans-serif; }
+    body { margin: 0; min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 20px; padding-bottom: max(20px, env(safe-area-inset-bottom)); background: radial-gradient(ellipse at 50% 0%, #dce8ff 0%, #f1f5ff 58%); color: #172554; font-family: 'Nunito', 'Trebuchet MS', system-ui, sans-serif; }
     main { width: min(100%, 420px); text-align: center; }
-    h1 { margin: 0; font-size: clamp(2rem, 8vw, 3rem); }
+    .welcome-screen { position: relative; overflow: hidden; padding: 38px 26px 30px; border: 1px solid #fff; border-radius: 30px; background: #ffffffed; box-shadow: 0 22px 65px #233b7821; }
+    .welcome-screen::before { content: ''; position: absolute; width: 220px; height: 220px; border-radius: 50%; top: -145px; right: -55px; background: #dbeafe; }
+    .welcome-screen::after { content: ''; position: absolute; width: 120px; height: 120px; border-radius: 50%; bottom: -82px; left: -54px; background: #ffedd5; }
+    .welcome-art { position: relative; z-index: 1; display: flex; justify-content: center; align-items: center; gap: 12px; margin: 0 auto 25px; }
+    .game-mark { width: 68px; height: 68px; display: grid; place-items: center; border-radius: 22px; background: #eff6ff; color: #2563eb; font-size: 2.35rem; font-weight: 900; transform: rotate(-7deg); }
+    .circle-mark { background: #fff7ed; color: #f97316; transform: rotate(7deg); }
+    .sparkle { color: #f5b800; font-size: 1.8rem; }
+    .eyebrow { margin: 0 0 10px; color: #5572ad; font-size: .78rem; font-weight: 900; letter-spacing: .18em; }
+    .welcome-title { position: relative; z-index: 1; margin: 0; font-size: clamp(2.25rem, 10vw, 3.2rem); line-height: 1.08; font-weight: 900; letter-spacing: -.04em; }
+    .welcome-title span { display: block; color: #2563eb; }
+    .welcome-message { margin: 15px 0 25px; color: #64748b; font-size: 1.15rem; font-weight: 700; }
+    #continue { position: relative; z-index: 1; width: 100%; padding: 15px 22px; border: 0; border-radius: 15px; background: linear-gradient(100deg, #2563eb, #5746dc); color: white; font: inherit; font-size: 1.1rem; font-weight: 900; cursor: pointer; box-shadow: 0 8px 18px #3655d533; transition: transform .15s ease, box-shadow .15s ease; touch-action: manipulation; }
+    #continue:hover { transform: translateY(-2px); box-shadow: 0 11px 22px #3655d544; }
+    #continue:active { transform: translateY(1px); }
+    #continue:focus-visible, .cell:focus-visible, #reset:focus-visible { outline: 3px solid #0f172a; outline-offset: 3px; }
+    .welcome-hint { position: relative; z-index: 1; margin: 17px 0 0; color: #94a3b8; font-size: .85rem; font-weight: 700; }
+    .game-screen h1 { margin: 0; font-size: clamp(2rem, 8vw, 3rem); }
     .subtitle { color: #64748b; margin: 8px 0 22px; }
-    #status { min-height: 1.6em; font-size: 1.2rem; font-weight: 700; color: #334155; }
+    #status { min-height: 1.6em; font-size: 1.2rem; font-weight: 800; color: #334155; }
     .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px; background: #cbd5e1; border-radius: 18px; }
-    .cell { aspect-ratio: 1; border: 0; border-radius: 12px; background: white; color: #2563eb; font: 800 clamp(2.8rem, 15vw, 5rem)/1 system-ui, sans-serif; cursor: pointer; box-shadow: 0 3px 0 #94a3b8; touch-action: manipulation; }
+    .cell { aspect-ratio: 1; border: 0; border-radius: 12px; background: white; color: #2563eb; font: 900 clamp(2.8rem, 15vw, 5rem)/1 'Nunito', 'Trebuchet MS', system-ui, sans-serif; cursor: pointer; box-shadow: 0 3px 0 #94a3b8; touch-action: manipulation; }
     .cell:hover:empty { background: #eff6ff; }
     .cell.circle { color: #f97316; }
     .cell:disabled { cursor: default; }
-    .cell:focus-visible, #reset:focus-visible { outline: 3px solid #0f172a; outline-offset: 3px; }
-    #reset { margin-top: 22px; padding: 12px 20px; border: 0; border-radius: 12px; background: #2563eb; color: white; font: inherit; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+    #reset { margin-top: 22px; padding: 12px 20px; border: 0; border-radius: 12px; background: #2563eb; color: white; font: inherit; font-weight: 900; cursor: pointer; touch-action: manipulation; }
     #reset:hover { background: #1d4ed8; }
     .legend { color: #64748b; font-size: .95rem; }
-    #install { display: none; margin: 0 0 16px; padding: 10px 16px; border: 1px solid #cbd5e1; border-radius: 12px; color: #172554; background: white; font: inherit; font-weight: 650; cursor: pointer; }
+    #install { display: none; margin: 0 0 16px; padding: 10px 16px; border: 1px solid #cbd5e1; border-radius: 12px; color: #172554; background: white; font: inherit; font-weight: 800; cursor: pointer; }
     .install-tip { color: #64748b; font-size: .9rem; }
+    [hidden] { display: none !important; }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Lukz Game</h1>
+  <main id="welcome-screen" class="welcome-screen">
+    <div class="welcome-art" aria-hidden="true"><span class="game-mark">X</span><span class="sparkle">✦</span><span class="game-mark circle-mark">O</span></div>
+    <p class="eyebrow">LET'S PLAY</p>
+    <h1 class="welcome-title">Welcome to Lukie's <span>first game</span></h1>
+    <p class="welcome-message">Enjoy NDAA!</p>
+    <button id="continue" type="button">Continue <span aria-hidden="true">→</span></button>
+    <p class="welcome-hint">Crosses &amp; Circles is waiting for you</p>
+  </main>
+  <main id="game-screen" class="game-screen" hidden>
+    <h1 tabindex="-1">Lukz Game</h1>
     <p class="subtitle">Crosses &amp; Circles · Take turns and get three in a row!</p>
     <button id="install" type="button">Install Lukz Game</button>
     <p id="status" aria-live="polite">Crosses go first.</p>
     <div class="board" id="board" role="group" aria-label="Tic-tac-toe board">
-      <button class="cell" aria-label="Top left, empty"></button>
-      <button class="cell" aria-label="Top middle, empty"></button>
-      <button class="cell" aria-label="Top right, empty"></button>
-      <button class="cell" aria-label="Middle left, empty"></button>
-      <button class="cell" aria-label="Center, empty"></button>
-      <button class="cell" aria-label="Middle right, empty"></button>
-      <button class="cell" aria-label="Bottom left, empty"></button>
-      <button class="cell" aria-label="Bottom middle, empty"></button>
-      <button class="cell" aria-label="Bottom right, empty"></button>
+      <button class="cell" aria-label="Top left, empty"></button><button class="cell" aria-label="Top middle, empty"></button><button class="cell" aria-label="Top right, empty"></button>
+      <button class="cell" aria-label="Middle left, empty"></button><button class="cell" aria-label="Center, empty"></button><button class="cell" aria-label="Middle right, empty"></button>
+      <button class="cell" aria-label="Bottom left, empty"></button><button class="cell" aria-label="Bottom middle, empty"></button><button class="cell" aria-label="Bottom right, empty"></button>
     </div>
     <button id="reset" type="button">New game</button>
     <p class="legend"><strong style="color:#2563eb">X</strong> Crosses &nbsp;·&nbsp; <strong style="color:#f97316">O</strong> Circles</p>
-    <p class="install-tip" id="installTip">Play in your browser, or add Lukz Game to your home screen.</p>
+    <p class="install-tip">Play in your browser, or add Lukz Game to your home screen.</p>
   </main>
   <script>
+    const welcomeScreen = document.querySelector('#welcome-screen');
+    const gameScreen = document.querySelector('#game-screen');
+    document.querySelector('#continue').addEventListener('click', function () {
+      welcomeScreen.hidden = true;
+      gameScreen.hidden = false;
+      gameScreen.querySelector('h1').focus();
+    });
     const cells = Array.from(document.querySelectorAll('.cell'));
     const status = document.querySelector('#status');
     const resetButton = document.querySelector('#reset');
     let currentPlayer = 'X';
     let gameOver = false;
-    const winningLines = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8],
-      [0, 3, 6], [1, 4, 7], [2, 5, 8],
-      [0, 4, 8], [2, 4, 6]
-    ];
+    const winningLines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
     function checkWinner() {
       return winningLines.some(function (line) {
-        const [a, b, c] = line;
+        const a = line[0], b = line[1], c = line[2];
         return cells[a].textContent !== '' && cells[a].textContent === cells[b].textContent && cells[b].textContent === cells[c].textContent;
       });
     }
@@ -77,7 +101,7 @@
       cell.setAttribute('aria-label', cell.getAttribute('aria-label').replace('empty', currentPlayer === 'X' ? 'Cross' : 'Circle'));
       cell.disabled = true;
       if (checkWinner()) {
-        status.textContent = `${currentPlayer === 'X' ? 'Crosses' : 'Circles'} win! 🎉`;
+        status.textContent = (currentPlayer === 'X' ? 'Crosses' : 'Circles') + ' win! 🎉';
         gameOver = true;
         return;
       }
@@ -87,7 +111,7 @@
         return;
       }
       currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-      status.textContent = `${currentPlayer === 'X' ? 'Crosses' : 'Circles'}' turn.`;
+      status.textContent = (currentPlayer === 'X' ? 'Crosses' : 'Circles') + "' turn.";
     }
     function newGame() {
       currentPlayer = 'X';
@@ -102,28 +126,16 @@
     }
     cells.forEach(function (cell) { cell.addEventListener('click', playTurn); });
     resetButton.addEventListener('click', newGame);
-
-    // Save the game files on the phone so it can open when offline.
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () { navigator.serviceWorker.register('./sw.js'); });
-    }
-
-    // Android and some desktop browsers provide a direct install button.
+    if ('serviceWorker' in navigator) window.addEventListener('load', function () { navigator.serviceWorker.register('./sw.js'); });
     let installPrompt;
     const installButton = document.querySelector('#install');
     window.addEventListener('beforeinstallprompt', function (event) {
-      event.preventDefault();
-      installPrompt = event;
-      installButton.style.display = 'inline-block';
+      event.preventDefault(); installPrompt = event; installButton.style.display = 'inline-block';
     });
     installButton.addEventListener('click', async function () {
       if (!installPrompt) return;
-      installPrompt.prompt();
-      await installPrompt.userChoice;
-      installPrompt = null;
-      installButton.style.display = 'none';
+      installPrompt.prompt(); await installPrompt.userChoice; installPrompt = null; installButton.style.display = 'none';
     });
   </script>
 </body>
 </html>
-
